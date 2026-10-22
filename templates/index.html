@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud CSV to JSON Converter</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="logo">
+                <span class="logo-icon">⇄</span>
+                <h1>Cloud CSV to JSON Converter</h1>
+            </div>
+            <p class="tagline">Stateless Cloud-Native Data Transformation Microservice</p>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="converter-grid">
+            <!-- Left Column: Input & Options -->
+            <section class="card input-card">
+                <div class="tabs">
+                    <button class="tab-btn active" id="tab-paste" data-tab="paste">Paste Text</button>
+                    <button class="tab-btn" id="tab-upload" data-tab="upload">Upload File</button>
+                </div>
+
+                <div class="tab-content" id="content-paste">
+                    <label for="csv-text" class="field-label">CSV Input Data</label>
+                    <textarea id="csv-text" class="code-area" placeholder="id,name,role,department&#10;1,Alice,Cloud Architect,Engineering&#10;2,Bob,DevOps Engineer,Infrastructure&#10;3,Charlie,Security Analyst,SecOps"></textarea>
+                </div>
+
+                <div class="tab-content hidden" id="content-upload">
+                    <div class="drop-zone" id="drop-zone">
+                        <div class="drop-icon">📁</div>
+                        <p class="drop-prompt">Drag & drop CSV/TSV/TXT file here, or <span class="browse-link">browse</span></p>
+                        <p class="drop-limit">Maximum file size: 5 MB</p>
+                        <input type="file" id="file-input" accept=".csv,.tsv,.txt" class="hidden-file-input">
+                    </div>
+                    <div id="file-details" class="file-details hidden">
+                        <span id="file-name" class="file-name"></span>
+                        <span id="file-size" class="file-size"></span>
+                        <button type="button" id="remove-file-btn" class="btn-sm btn-danger">Remove</button>
+                    </div>
+                </div>
+
+                <!-- Conversion Options -->
+                <div class="options-panel">
+                    <h3>Conversion Options</h3>
+                    <div class="options-grid">
+                        <div class="control-group">
+                            <label for="delimiter-select">Delimiter</label>
+                            <select id="delimiter-select">
+                                <option value="auto">Auto-detect</option>
+                                <option value=",">Comma (,)</option>
+                                <option value=";">Semicolon (;)</option>
+                                <option value="&#9;">Tab (\t)</option>
+                                <option value="|">Pipe (|)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="format-select">Output Format</label>
+                            <select id="format-select">
+                                <option value="array_of_objects">Array of Objects</option>
+                                <option value="array_of_arrays">Array of Arrays</option>
+                                <option value="nested_json">Nested JSON Object</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group" id="key-column-group" style="display:none;">
+                            <label for="key-column-input">Key Column Name</label>
+                            <input type="text" id="key-column-input" placeholder="e.g. id">
+                        </div>
+                    </div>
+
+                    <div class="toggles-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="header-toggle" checked>
+                            <span>First row contains headers</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pretty-toggle" checked>
+                            <span>Pretty-print JSON (Indented)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button id="preview-btn" class="btn btn-secondary">Preview Table</button>
+                    <button id="convert-btn" class="btn btn-primary">Convert to JSON</button>
+                </div>
+            </section>
+
+            <!-- Right Column: Results & Previews -->
+            <section class="card output-card">
+                <div class="output-header">
+                    <h2>Output & Preview</h2>
+                    <div class="output-actions">
+                        <button id="copy-btn" class="btn-sm" title="Copy JSON to clipboard">📋 Copy</button>
+                        <button id="download-btn" class="btn-sm btn-primary" title="Download JSON file">💾 Download</button>
+                    </div>
+                </div>
+
+                <div id="status-message" class="status-message hidden"></div>
+
+                <!-- Tabular Preview -->
+                <div id="table-preview-container" class="preview-container hidden">
+                    <h3>Data Preview (First 10 Rows)</h3>
+                    <div class="table-scroll">
+                        <table id="preview-table" class="data-table"></table>
+                    </div>
+                </div>
+
+                <!-- Formatted JSON View -->
+                <div class="json-container">
+                    <label for="json-output" class="field-label">JSON Result</label>
+                    <pre id="json-output" class="code-area json-view"><code>// Converted JSON will appear here...</code></pre>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>Cloud CSV to JSON Microservice &bull; Cloud Computing Lab &bull; Stateless &bull; Container-Ready</p>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

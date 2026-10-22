@@ -355,7 +355,7 @@ tests/test_json_formatter.py::test_format_output_empty PASSED
 
 ## 16. Verified Live Website URL
 
-- **GitHub Repository:** https://github.com/nagavishwa-spidey/cloud-csv-to-json-converter
+- **GitHub Repository:** https://github.com/nagavishwa-spidey/project-2-csv-to-json
 - **Live Deployment URL:** _To be updated after cloud provider deployment verification_
 
 ---
